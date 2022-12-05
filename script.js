@@ -121,6 +121,36 @@ const winChecker = () => {
   }
 };
 
+//Win Logic
+const winTest = () => {
+    //Loop through all win patterns
+    for (let i of winningPattern) {
+      let [element1, element2, element3] = [
+        btnRef[i[0]].innerText,
+        btnRef[i[1]].innerText,
+        btnRef[i[2]].innerText,
+      ];
+      if (element1 != "X" && (element2 != "X") & (element3 != "X")) {
+        if (element1 == element2 && element1 == "O") {
+            console.log("VERVER: "+ i[2]);
+            console.log("Index: "+ All_C.indexOf(i[2]*2+1));
+            moveArrayElement(All_C,All_C.indexOf(i[2]*2+1),0);
+        }
+        if (element2 == element3 && element2 == "O") {
+            console.log("VERVER: "+ i[0]);
+            console.log("Index: "+ All_C.indexOf(i[0]*2+1));
+            moveArrayElement(All_C,All_C.indexOf(i[0]*2+1),0);
+        }
+        if (element1 == element3 && element1 == "O") {
+            console.log("VERVER: "+ i[1]);
+            console.log("Index: "+ All_C.indexOf(i[1]*2+1));
+            moveArrayElement(All_C,All_C.indexOf(i[1]*2+1),0);
+        }
+      }
+    }
+  }
+
+
 //Display X/O on click
 btnRef.forEach((element, bot) => {
   element.addEventListener("click", () => {
@@ -145,39 +175,41 @@ btnRef.forEach((element, bot) => {
     console.log("Actual State: " + State_Automato);
 
     // 
-    Gera_Evento = 100;
 
     shuffleArray(All_C);
     console.log("Vetor Random: " + All_C);
+    winTest();
+    Gera_Evento = 100;
+    console.log("Vetor Random Ajustado: " + All_C);
 
     for(var i = 0; i < All_C.length; i++) { 
         switch(All_C[i]) {
             case 1:
-                    trans1();
+                    trans1(); //C0
                 break;        
             case 3:
-                    trans3();
+                    trans3(); //C1
                 break;
             case 5:
-                    trans5();
+                    trans5(); //C2
                 break;
             case 7:
-                    trans7();
+                    trans7(); //C3
                 break;        
             case 9:
-                    trans9();
+                    trans9(); //C4
                 break;
             case 11:
-                    trans11();
+                    trans11(); //C5
                 break;
             case 13:
-                    trans13();
+                    trans13(); //C6
                 break;        
             case 15:
-                    trans15();
+                    trans15(); //C7
                 break;
             case 17:
-                    trans17();
+                    trans17(); //C8
                 break;
             default:
                 console.log("Não entrou.");
@@ -265,8 +297,13 @@ for (let i = arr.length - 1; i > 0; i--) {
 }
 // Retornando array com aleatoriedade
 return arr;
-}
+};
 
+function moveArrayElement(arr, from, to) {
+    var el = arr[from];
+    arr.splice(from, 1);
+    arr.splice(to, 0, el);
+};
 
 function transNC(Evento) {
 
